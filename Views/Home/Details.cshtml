@@ -1,4 +1,5 @@
-﻿@model Country
+﻿<!--Binding to a CountryViewModel object, which is passed from the controller.-->
+@model CountryViewModel
 @{
     ViewData["Title"] = "Country Details";
 }
@@ -8,14 +9,25 @@
         <ul class="list-group text-center">
             <li class="list-group-item">
                 <!--Displaying country flag.-->
-                <img src="~/images/@Model.Flag" alt="" />
-                <h3>@Model.Name</h3>
+                <img src="~/images/@Model.Country.Flag" alt="" />
+                <h3>@Model.Country.Name</h3>
             </li>
             <li class="list-group-item">
-                <h4>Game: @Model.Game.Name</h4>
+                <h4>Game: @Model.Country.Game.Name</h4>
             </li>
             <li class="list-group-item">
-                <h4>Category: @Model.Category.Name</h4>
+                <h4>Category: @Model.Country.Category.Name</h4>
+            </li>
+            <!--Adding group for active game and category from session state.-->
+            <li class="list-group-item">
+                <form asp-action="Add" asp-controller="Favorites" method="post">
+                    <a asp-action="Index" class="btn btn-primary" asp-route-activeConf="@Model.ActiveGame" asp-route-activeDiv="@Model.ActiveCategory">
+                        Return to Home Page
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        Add to Favorites
+                    </button> <input type="hidden" asp-for="Country.CountryID" />
+                </form>
             </li>
 
         </ul>
